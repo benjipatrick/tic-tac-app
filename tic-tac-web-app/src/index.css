@@ -5,8 +5,8 @@ body {
   background-color: #1a1a2e
 }
 
-ol, ul {
-  /* padding-left: 30px; */
+.noHover{
+  pointer-events: none;
 }
 
 .board-row:after {

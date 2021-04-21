@@ -1,9 +1,11 @@
 import numpy as np
-import Utils
 import copy
 import random
 import time
-
+import sys
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(dir_path)
 from PURE_MCTS import PURE_MCTS 
 
 class random_player():
@@ -38,7 +40,10 @@ class monte_carlo_player():
         
     
     def play(self, board, player, turn=1):
-        if not self.mcts:
-            self.mcts = PURE_MCTS(self.game, player, self.show)  
-        action = self.mcts.find_next_action(board, player, turn, max_iters=self.iters)
-        return action
+        try:
+            if not self.mcts:
+                self.mcts = PURE_MCTS(self.game, player, self.show)  
+            action = self.mcts.find_next_action(board, player, turn, max_iters=self.iters)
+            return action
+        except:
+            return None

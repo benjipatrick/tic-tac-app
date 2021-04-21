@@ -6,7 +6,7 @@ import './index.css'
 
 function Square(props) {
       return (
-        <div className='box'>
+        <div className={props.isButtonDisabled ? 'box noHover' : 'box'}>
             <button 
                 className="button" 
                 onClick={props.onClick}
@@ -19,13 +19,15 @@ function Square(props) {
   }
   
 class Board extends React.Component {
+  
     renderSquare(i) {
+      const isButtonDisabled = this.props.winner != -2 || this.props.squares[i] != null || !this.props.isPlayerTurn;
         return <Square 
         className='square'
         value={this.props.squares[i]} 
         onClick={() => this.props.onClick(i)}
         winner={this.props.winner}
-        isButtonDisabled={this.props.winner != -2}
+        isButtonDisabled={isButtonDisabled}
         />;
     }
 
@@ -53,10 +55,15 @@ class Game extends React.Component {
         winner: -2,
     };
 
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
+    this.handlePress = this.handlePress.bind(this);
   }
 
-  async GetGameStatus(squares) {
+  componentDidMount() {
+
+  }
+
+  async GetGameStatus(squares, endOfPlayerTurn) {
     console.log("Making Game Status Request")
     try {
       const response = await fetch('/game/status', {
@@ -71,14 +78,28 @@ class Game extends React.Component {
         throw Error(response.statusText)
       }
       const json = await response.json();
-      var data = JSON.stringify(json);
-      if (data == 'null') data = -2
-  
-      this.setState({
-        winner:data,
-        squares: squares,
-        isXTurn: !this.state.isXTurn,  
-      })
+
+      const nextMove = json[1]
+      var status = JSON.stringify(json[0]);
+      console.log(status)
+      console.log(nextMove)
+      if (status == 'null') {
+        status = -2
+      }
+      
+      if (!endOfPlayerTurn) {
+        squares = this.state.squares.slice()
+        squares[nextMove] = 'O'
+        this.setState({
+          squares:squares,
+          isXTurn: !this.state.isXTurn,
+        })
+        this.GetGameStatus(squares, true)
+      } else {
+        this.setState({
+          winner:status
+        })
+      }
   
     } catch (error) {
       console.log(error)
@@ -87,26 +108,52 @@ class Game extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    if (squares[i] != null) return
     squares[i] = this.state.isXTurn ? 'X' : 'O';
-    this.GetGameStatus(squares)
-    // this.setState({
-    //     squares: squares,
-    //     isXTurn: !this.state.isXTurn,   
-    // }) 
-}
+    this.GetGameStatus(squares, false)
+
+    this.setState({
+      squares: squares,
+      isXTurn: !this.state.isXTurn,  
+    })
+    
+  }
+
+  handlePress() {
+    this.setState({
+        squares: Array(9).fill(null),
+        isXTurn: true,
+        winner: -2,
+    });
+  }
 
   render() {
+
+    var playerInfo;
+
+    if (this.state.winner == 0) {
+      playerInfo = 'Draw';
+    } else if (this.state.winner != -2) {
+      playerInfo = (this.state.winner==1 ? 'X' : 'O')   + ' Wins!!!';
+    } else {
+      playerInfo = 'Player Turn: ' +  (this.state.isXTurn ? 'X' : 'O');
+    }
+
+
     return (
       <div className="game">
           <Board 
             squares={this.state.squares}
             onClick={(i) => this.handleClick(i)}
             winner={this.state.winner}
+            isPlayerTurn={this.state.isXTurn}
           />
         <div className="game-info">
-          <div className="current-player">Player Turn: {this.state.isXTurn ? 'X' : 'O'}</div>
-          <button className="restart-button">Reset</button>
+          <div className="current-player">{playerInfo}</div>
+          <br></br>
+          <button 
+              className="restart-button"
+              onClick={() => this.handlePress()}
+              >Reset</button>
         </div>
       </div>
     );
