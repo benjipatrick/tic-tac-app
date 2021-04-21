@@ -5,15 +5,12 @@ import './index.css'
 
 
 function Square(props) {
-  console.log(props.winner)
-  const isButtonDisabled = props.winner != -2
-  console.log(isButtonDisabled)
       return (
         <div className='box'>
             <button 
                 className="button" 
                 onClick={props.onClick}
-                disabled={isButtonDisabled}
+                disabled={props.isButtonDisabled}
             >
                 {props.value}
             </button>
@@ -28,6 +25,7 @@ class Board extends React.Component {
         value={this.props.squares[i]} 
         onClick={() => this.props.onClick(i)}
         winner={this.props.winner}
+        isButtonDisabled={this.props.winner != -2}
         />;
     }
 
@@ -55,7 +53,7 @@ class Game extends React.Component {
         winner: -2,
     };
 
-    this.GetGameStatus = this.GetGameStatus.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   async GetGameStatus(squares) {
@@ -73,8 +71,8 @@ class Game extends React.Component {
         throw Error(response.statusText)
       }
       const json = await response.json();
-      var data = JSON.stringify(json)
-      if (data == '{}') data = -2
+      var data = JSON.stringify(json);
+      if (data == 'null') data = -2
   
       this.setState({
         winner:data,
