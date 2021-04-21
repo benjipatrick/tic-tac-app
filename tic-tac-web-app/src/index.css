@@ -1,0 +1,90 @@
+body {
+  font: 20px "Century Gothic", Futura, sans-serif;
+  font-weight: bold;
+  margin: 0px;
+  background-color: #1a1a2e
+}
+
+ol, ul {
+  /* padding-left: 30px; */
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.current-player {
+  margin-top: 10px;
+  color: #e94560;
+}
+
+.box {
+  border: 6px solid #0f3460;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+}
+
+.box:hover {
+  opacity: 0.5;
+}
+
+.game {
+  min-width: 30vw;
+  max-width: 100%;  
+  box-sizing: border-box;
+  padding: 10vh 10vw;
+  align-items: center;
+  text-align: center;
+ } 
+
+.button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  width:100%;
+  height:100%;
+  font-family: Helvetica;
+  font-weight: bold;
+  font-size: 4em;
+  color: white;
+}
+
+.restart-button {
+  display:inline-block;
+  padding:0.3em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  border-radius:2em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-weight:300;
+  color:#FFFFFF;
+  background-color:#4eb5f1;
+  text-align:center;
+  transition: all 0.2s;
+}
+.restart-button:hover{
+  background-color:#4095c6;
+}
+
+
+.game-board
+{
+	width: 600px;
+  height: 600px;
+	position: relative;
+	margin: 0 auto;
+  background-color: #16213e;
+  color: #fff;
+  border: 6px solid #0f3460;
+  border-radius: 10px;
+	
+	display: grid;
+	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
