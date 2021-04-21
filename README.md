@@ -2,7 +2,7 @@
 
 React web app with a Python Flask backend for tic tac toe.
 
-Flask backend does all game logic and supplies an AI that plays my Monte Carlo Tree Search.
+Flask backend does all game logic and supplies an AI that plays by Monte Carlo Tree Search.
 
 
 # To-do
