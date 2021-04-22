@@ -116,13 +116,13 @@ class Game extends React.Component {
   handleClick(i) {
     const squares = this.state.squares.slice();
     squares[i] = this.state.isXTurn ? 'X' : 'O';
-    this.GetGameStatus(squares, false)
 
     this.setState({
       squares: squares,
       isXTurn: !this.state.isXTurn,  
     })
-    
+
+    this.GetGameStatus(squares, false)
   }
 
   handlePress() {
