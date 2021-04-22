@@ -66,7 +66,7 @@ class Game extends React.Component {
   async GetGameStatus(squares, endOfPlayerTurn) {
     console.log("Making Game Status Request")
     try {
-      const response = await fetch('/game/status', {
+      const response = await fetch('https://tic-tac-app-me.herokuapp.com/game/status', {
         method:"POST",
           cache: "no-cache",
           headers:{
