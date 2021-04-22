@@ -168,7 +168,7 @@ class PURE_MCTS():
             if temp_node.state.player == -player:
                 temp_node.state.win_score += self.WIN_SCORE
             elif temp_node.state.player != player:
-                temp_node.state.win_score += self.LOSE_SCORE
+                temp_node.state.win_score -= sys.maxsize
             temp_node = temp_node.parent
     
    
