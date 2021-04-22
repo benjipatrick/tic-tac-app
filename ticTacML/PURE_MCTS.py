@@ -178,10 +178,6 @@ class PURE_MCTS():
 
         board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
 
-        if board_status == self.player:
-            node.parent.state.win_score = -sys.maxsize
-            return board_status
-
         while board_status == None:
             temp_state = temp_state.random_play(self.game)
             board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
