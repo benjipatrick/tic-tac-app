@@ -29,7 +29,7 @@ class State():
         return State(next_board, self.turns+1, -self.player, action)
 
 def uct_value(total_visit, node_win_score, node_visit):
-    if node_visit == 0: return sys.maxsize
+    if node_visit == 0: return -sys.maxsize
     return (node_win_score / node_visit) + ((1/math.sqrt(2)) * math.sqrt(math.log(total_visit)/node_visit))
 
 def find_best_node(node):
@@ -166,9 +166,9 @@ class PURE_MCTS():
         while temp_node != None:
             temp_node.state.visit_count += 1
             if temp_node.state.player == -player:
-                temp_node.state.win_score -= self.WIN_SCORE
+                temp_node.state.win_score += self.WIN_SCORE
             elif temp_node.state.player != player:
-                temp_node.state.win_score -= self.LOSE_SCORE
+                temp_node.state.win_score += self.LOSE_SCORE
             temp_node = temp_node.parent
     
    
