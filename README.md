@@ -7,4 +7,9 @@ Flask backend does all game logic and supplies an AI that plays by Monte Carlo T
 Current version deployed at https://tic-tac-app-me.herokuapp.com/.
 
 # To-do
-Implement Machine learning algorithm, which the Flask backend will poll for moves.
+* Implement Machine learning algorithm, which the Flask backend will poll for moves.
+* Adjustable Difficulty
+* Ability to switch players
+* Adaptable graphics to screen type (mobile etc)
+* Online matchmaking
+* Functionality for different games

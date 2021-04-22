@@ -1,14 +1,14 @@
 
 from flask import Flask, send_from_directory, request, jsonify
 from flask_restful import Api, Resource, reqparse
-# from flask_cors import CORS #comment this on deployment
+from flask_cors import CORS #comment this on deployment
 from ticTacML.TicTacToe import TicTacToe
 from ticTacML.Players import monte_carlo_player
 
 import numpy as np
 
 app = Flask(__name__, static_url_path='', static_folder='tic-tac-web-app/build')
-# CORS(app) #comment this on deployment
+CORS(app) #comment this on deployment
 
 game = TicTacToe()
 monte_carlo_player = monte_carlo_player(game, iters=450, show=True)
