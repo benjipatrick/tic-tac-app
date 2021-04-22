@@ -21,7 +21,7 @@ function Square(props) {
 class Board extends React.Component {
   
     renderSquare(i) {
-      const isButtonDisabled = this.props.winner != -2 || this.props.squares[i] != null || !this.props.isPlayerTurn;
+      const isButtonDisabled = this.props.winner !== -2 || this.props.squares[i] != null || !this.props.isPlayerTurn;
         return <Square 
         className='square'
         value={this.props.squares[i]} 
@@ -83,7 +83,7 @@ class Game extends React.Component {
       var status = JSON.stringify(json[0]);
       console.log(status)
       console.log(nextMove)
-      if (status == 'null') {
+      if (status === 'null') {
         status = -2
       }
       
@@ -130,10 +130,10 @@ class Game extends React.Component {
 
     var playerInfo;
 
-    if (this.state.winner == 0) {
+    if (this.state.winner === 0) {
       playerInfo = 'Draw';
-    } else if (this.state.winner != -2) {
-      playerInfo = (this.state.winner==1 ? 'X' : 'O')   + ' Wins!!!';
+    } else if (this.state.winner !== -2) {
+      playerInfo = (this.state.winner===1 ? 'X' : 'O')   + ' Wins!!!';
     } else {
       playerInfo = 'Player Turn: ' +  (this.state.isXTurn ? 'X' : 'O');
     }
