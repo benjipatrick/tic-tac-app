@@ -179,8 +179,7 @@ class PURE_MCTS():
         board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
 
         if board_status == self.player:
-            temp_node.parent.state.visit_count = self.LOSE_SCORE
-            temp_node.parent.state.win_score = self.LOSE_SCORE
+            node.parent.state.win_score = -sys.maxsize
             return board_status
 
         while board_status == None:
