@@ -86,8 +86,12 @@ class Game extends React.Component {
       if (status === 'null') {
         status = -2
       }
+
+      this.setState({
+        winner:status
+      })
       
-      if (!endOfPlayerTurn) {
+      if (!endOfPlayerTurn && status == -2) {
         squares = this.state.squares.slice()
         squares[nextMove] = 'O'
         this.setState({
@@ -95,11 +99,9 @@ class Game extends React.Component {
           isXTurn: !this.state.isXTurn,
         })
         this.GetGameStatus(squares, true)
-      } else {
-        this.setState({
-          winner:status
-        })
-      }
+      } 
+      
+     
   
     } catch (error) {
       console.log(error)
@@ -130,10 +132,10 @@ class Game extends React.Component {
 
     var playerInfo;
 
-    if (this.state.winner === 0) {
+    if (this.state.winner == 0) {
       playerInfo = 'Draw';
-    } else if (this.state.winner !== -2) {
-      playerInfo = (this.state.winner===1 ? 'X' : 'O')   + ' Wins!!!';
+    } else if (this.state.winner != -2) {
+      playerInfo = (this.state.winner==1 ? 'X' : 'O')   + ' Wins!!!';
     } else {
       playerInfo = 'Player Turn: ' +  (this.state.isXTurn ? 'X' : 'O');
     }
