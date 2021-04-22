@@ -44,6 +44,7 @@ class monte_carlo_player():
             if not self.mcts:
                 self.mcts = PURE_MCTS(self.game, player, self.show)  
             action = self.mcts.find_next_action(board, player, turn, max_iters=self.iters)
+            print(action)
             return action
         except:
             return None

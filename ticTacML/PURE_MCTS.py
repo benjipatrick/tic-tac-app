@@ -9,7 +9,6 @@ class State():
     def __init__(self, board, turns, player, action_to_state, visit_count=0, win_score=0):
         self.board = board
         self.player = player
-        self.opponent = -player
         self.visit_count = visit_count
         self.win_score = win_score
         self.action_to_state = action_to_state
@@ -29,7 +28,7 @@ class State():
         return State(next_board, self.turns+1, -self.player, action)
 
 def uct_value(total_visit, node_win_score, node_visit):
-    if node_visit < 1: return 0
+    if node_visit == 0: return sys.maxsize
     return (node_win_score / node_visit) + ((1/math.sqrt(2)) * math.sqrt(math.log(total_visit)/node_visit))
 
 def find_best_node(node):
@@ -105,10 +104,9 @@ class PURE_MCTS():
 
     def __init__(self, game, player, show=False):
         self.WIN_SCORE = 1
-        self.LOSE_SCORE = -1
+        self.LOSE_SCORE = 0
         self.DRAW_SCORE = 0
         self.player = player
-        self.opponent = -player
         self.tree = None
         self.game = game
         self.show = show
@@ -178,8 +176,8 @@ class PURE_MCTS():
 
         board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
 
-        if board_status == self.player:
-            temp_node.parent.state.node_visit = -sys.maxsize
+        if board_status == -self.player:
+            temp_node.parent.state.win_score = -sys.maxsize
             return board_status
         while board_status == None:
             temp_state = temp_state.random_play(self.game)

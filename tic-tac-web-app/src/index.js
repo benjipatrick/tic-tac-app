@@ -80,17 +80,21 @@ class Game extends React.Component {
       const json = await response.json();
 
       const nextMove = json[1]
-      var status = JSON.stringify(json[0]);
+      var status = json[0];
       console.log("status: "+status)
       
-      if (status === 'null') {
+      if (status == null) {
         status = -2
       }
+
+      this.setState({
+        winner:status
+      })
       
       if (!endOfPlayerTurn && status == -2) {
         console.log("next move: "+nextMove)
         squares = this.state.squares.slice()
-        if (nextMove == 'null') {
+        if (nextMove == null) {
           console.log("invalid move")
           squares[squares.indexOf(null)] = 'O'
         } else {
@@ -100,7 +104,6 @@ class Game extends React.Component {
         this.setState({
           squares:squares,
           isXTurn: !this.state.isXTurn,
-          winner:status
         })
         this.GetGameStatus(squares, true)
       } 
