@@ -11,7 +11,7 @@ app = Flask(__name__, static_url_path='', static_folder='tic-tac-web-app/build')
 # CORS(app) #comment this on deployment
 
 game = TicTacToe()
-monte_carlo_player = monte_carlo_player(game, iters=100, show=True)
+monte_carlo_player = monte_carlo_player(game, iters=450, show=True)
 
 @app.route('/game/status', methods = ['POST'])
 def result():
