@@ -93,7 +93,12 @@ class Game extends React.Component {
       
       if (!endOfPlayerTurn && status == -2) {
         squares = this.state.squares.slice()
-        squares[nextMove] = 'O'
+        if (nextMove == 'null') {
+          squares[squares.indexOf(null)] = 'O'
+        } else {
+          squares[nextMove] = 'O'
+        }
+        
         this.setState({
           squares:squares,
           isXTurn: !this.state.isXTurn,

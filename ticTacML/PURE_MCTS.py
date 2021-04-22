@@ -105,7 +105,7 @@ class PURE_MCTS():
 
     def __init__(self, game, player, show=False):
         self.WIN_SCORE = 1
-        self.LOSE_SCORE = -2
+        self.LOSE_SCORE = -5
         self.DRAW_SCORE = 0
         self.player = player
         self.opponent = -player
@@ -178,6 +178,10 @@ class PURE_MCTS():
 
         board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
 
+        if board_status == self.player:
+            node.parent.state.win_score = self.LOSE_SCORE
+            node.parent.state.visit_count = 0
+            return board_status
         while board_status == None:
             temp_state = temp_state.random_play(self.game)
             board_status = self.game.get_game_status(temp_state.board, temp_state.turns)
