@@ -166,9 +166,9 @@ class PURE_MCTS():
         while temp_node != None:
             temp_node.state.visit_count += 1
             if temp_node.state.player == -player:
-                temp_node.state.win_score += self.WIN_SCORE
+                temp_node.state.win_score -= self.WIN_SCORE
             elif temp_node.state.player != player:
-                temp_node.state.win_score += self.LOSE_SCORE
+                temp_node.state.win_score -= self.LOSE_SCORE
             temp_node = temp_node.parent
     
    
